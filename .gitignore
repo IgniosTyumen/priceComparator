@@ -5,3 +5,4 @@ AC.db
 *.iml
 *.xls
 .jar
+.xlsm
