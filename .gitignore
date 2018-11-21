@@ -4,5 +4,5 @@ XLSX/*
 AC.db
 *.iml
 *.xls
-.jar
-.xlsm
+*.jar
+*.xlsm
