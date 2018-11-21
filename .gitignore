@@ -1,1 +1,7 @@
 .idea/*
+target/*
+XLSX/*
+AC.db
+*.iml
+*.xls
+.jar
