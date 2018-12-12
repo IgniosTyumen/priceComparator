@@ -2,6 +2,7 @@ package Readers;
 
 import ObjectsProject.PromoTarif;
 import Repositories.PromoEndTodayRepo;
+import lombok.Data;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.xssf.eventusermodel.XSSFReader;
@@ -17,130 +18,29 @@ import java.util.Date;
 /**
  * XSSF and SAX (Event API)
  */
+@Data
 public class ReadPromoEndTodayFromXLMS {
 
-    static Double ean = 0.0;
+    static Integer ean = 0;
     static Double price = 0.0;
     static Double remaings = 0.0;
     static String manager = "";
     static String chief = "";
-    static Double segment = 0.0;
+    static Integer segment = 0;
     static String articleName = "";
     static String status = "";
     static boolean ready = false;
     static String cellAdr = "";
     static String filename = "";
     static String rowAdr = "";
+    private static Integer category=0;
+    private static Integer family=0;
+    private static Integer alley=0;
+    private static Integer gondol=0;
+    private static Integer element=0;
     private static Date startPromo;
     private static Date finishPromo;
 
-    public static Date getStartPromo() {
-        return startPromo;
-    }
-
-    public static void setStartPromo(Date startPromo) {
-        ReadPromoEndTodayFromXLMS.startPromo = startPromo;
-    }
-
-    public static Date getFinishPromo() {
-        return finishPromo;
-    }
-
-    public static void setFinishPromo(Date finishPromo) {
-        ReadPromoEndTodayFromXLMS.finishPromo = finishPromo;
-    }
-
-    public static String getRowAdr() {
-        return rowAdr;
-    }
-
-    public static void setRowAdr(String rowAdr) {
-        ReadOldArticles.rowAdr = rowAdr;
-    }
-
-    public static Double getEan() {
-        return ean;
-    }
-
-    public static void setEan(Double ean) {
-        ReadOldArticles.ean = ean;
-    }
-
-    public static Double getPrice() {
-        return price;
-    }
-
-    public static void setPrice(Double price) {
-        ReadOldArticles.price = price;
-    }
-
-    public static Double getRemaings() {
-        return remaings;
-    }
-
-    public static void setRemaings(Double remaings) {
-        ReadOldArticles.remaings = remaings;
-    }
-
-    public static String getManager() {
-        return manager;
-    }
-
-    public static void setManager(String manager) {
-        ReadOldArticles.manager = manager;
-    }
-
-    public static String getChief() {
-        return chief;
-    }
-
-    public static void setChief(String chief) {
-        ReadOldArticles.chief = chief;
-    }
-
-    public static Double getSegment() {
-        return segment;
-    }
-
-    public static void setSegment(Double segment) {
-        ReadOldArticles.segment = segment;
-    }
-
-    public static String getArticleName() {
-        return articleName;
-    }
-
-    public static void setArticleName(String articleName) {
-        ReadOldArticles.articleName = articleName;
-    }
-
-    public static String getStatus() {
-        return status;
-    }
-
-    public static void setStatus(String status) {
-        ReadOldArticles.status = status;
-    }
-
-    public static boolean isReady() {
-        return ready;
-    }
-
-    public static void setReady(boolean ready) {
-        ReadOldArticles.ready = ready;
-    }
-
-    public static String getCellAdr() {
-        return cellAdr;
-    }
-
-    public static void setCellAdr(String cellAdr) {
-        ReadOldArticles.cellAdr = cellAdr;
-    }
-
-    public static String getFilename() {
-        return filename;
-    }
 
     public static void setFilename(String filename) {
         ReadOldArticles.filename = filename;
@@ -190,8 +90,12 @@ public class ReadPromoEndTodayFromXLMS {
         private static void uploadPromoParts(String adressColumn, String meaning) {
 
             switch (adressColumn) {
+                case ("A"): {
+                    segment = Integer.parseInt(meaning);
+                    break;
+                }
                 case ("B"): {
-                    ean = Double.parseDouble(meaning);
+                    ean = Integer.parseInt(meaning);
                     break;
                 }
                 case ("D"): {
@@ -203,9 +107,17 @@ public class ReadPromoEndTodayFromXLMS {
                     break;
                 }
 
-                case ("H"): {
+                case ("G"): {
                     price = Double.parseDouble(meaning);
-                    PromoTarif tarif = new PromoTarif(ean, price, startPromo, finishPromo);
+                    break;
+                }
+                case ("H"): {
+                    category = Integer.parseInt(meaning);
+                    break;
+                }
+                case ("I"): {
+                    family = Integer.parseInt(meaning);
+                    PromoTarif tarif = new PromoTarif(ean, price, startPromo, finishPromo,segment,family,category);
                     PromoEndTodayRepo.getInstance().putPromo(tarif);
                     break;
                 }
@@ -247,7 +159,7 @@ public class ReadPromoEndTodayFromXLMS {
             // v => contents of a cell
             // Output after we've seen the string contents
             if (name.equals("v") && !rowAdr.equals("1")) {
-                uploadPromoParts(ReadPromoEndTodayFromXLMS.getCellAdr(), lastContents);
+                uploadPromoParts(ReadPromoEndTodayFromXLMS.cellAdr, lastContents);
             }
             lastContents = "";
 

@@ -34,6 +34,7 @@ public class JDBCInitializer {
             rs.close();
             } catch (SQLException e) {
             e.printStackTrace();
+            
         }
         return result;
     }

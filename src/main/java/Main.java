@@ -1,4 +1,5 @@
 import DB.JDBCInitializer;
+import DB.JDBCLocation;
 import Logic.TarifAnolizer;
 import Readers.*;
 import Reports.Reports;
@@ -25,6 +26,7 @@ public class Main {
             ReadPromoEndTodayFromXLMS promoTarifsGettingOld = new ReadPromoEndTodayFromXLMS();
             promoTarifsGettingOld.processOneSheet("XLSX/тарифы.xlsm");
             JDBCInitializer.connect();
+            JDBCLocation.connect();
 
         } catch (Exception e) {
             e.printStackTrace();

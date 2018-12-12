@@ -1,7 +1,9 @@
 package Reports;
 
 import DB.JDBCInitializer;
+import DB.JDBCLocation;
 import ObjectsProject.Article;
+import ObjectsProject.Location;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -17,10 +19,10 @@ import java.util.stream.Collectors;
 
 public abstract class Reports {
 
-    public static void saveNormals(File file, TreeMap<Double, Article> print) throws IOException {
+    public static void saveNormals(File file, TreeMap<Integer, Article> print) throws IOException {
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet = workbook.createSheet("Updated tarifs");
-       List<Map.Entry<Double,Article>> comp = print.entrySet().stream().sorted(Map.Entry.comparingByValue()).collect(Collectors.toList());
+       List<Map.Entry<Integer,Article>> comp = print.entrySet().stream().sorted(Map.Entry.comparingByValue()).collect(Collectors.toList());
         Iterator iterator = comp.iterator();
 
         int dash = 0;
@@ -96,6 +98,15 @@ public abstract class Reports {
         cell = row.createCell(8 + dash);
         cell.setCellValue("Штрихкод");
         cell.setCellStyle(style2);
+        cell = row.createCell(9 + dash);
+        cell.setCellValue("АЛ");
+        cell.setCellStyle(style2);
+        cell = row.createCell(10 + dash);
+        cell.setCellValue("ГОН");
+        cell.setCellStyle(style2);
+        cell = row.createCell(11 + dash);
+        cell.setCellValue("ЭЛ");
+        cell.setCellStyle(style2);
         while (iterator.hasNext()) {
             rownum++;
             Map.Entry<Double,Article> entry = (Map.Entry<Double, Article>) iterator.next();
@@ -132,16 +143,30 @@ public abstract class Reports {
                 cell.setCellValue("*"+search+"*");
             } else
             cell.setCellValue("unknown");
-        }
+
+            Location location1 = JDBCLocation.checkifexists(article.getEan());
+            if (location1 == null || location1.getAlley().equals(0)){
+                location1 = JDBCLocation.checkForUnknown(article.getSegment(), article.getFamily(), article.getCategory());
+            }
+        cell = row.createCell(9 + dash);
+        cell.setCellStyle(style2);
+        cell.setCellValue(location1.getAlley());
+            cell = row.createCell(10 + dash);
+            cell.setCellStyle(style2);
+            cell.setCellValue(location1.getGondol());
+            cell = row.createCell(11 + dash);
+            cell.setCellStyle(style2);
+            cell.setCellValue(location1.getElement());
+    }
         FileOutputStream outputStream = new FileOutputStream(file);
         workbook.write(outputStream);
         outputStream.close();
     }
 
-    public static void savePromo(File file, TreeMap<Double, Article> print) throws IOException {
+    public static void savePromo(File file, TreeMap<Integer, Article> print) throws IOException {
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet = workbook.createSheet("Updated promos");
-        List<Map.Entry<Double,Article>> comp = print.entrySet().stream().sorted(Map.Entry.comparingByValue()).collect(Collectors.toList());
+        List<Map.Entry<Integer,Article>> comp = print.entrySet().stream().sorted(Map.Entry.comparingByValue()).collect(Collectors.toList());
         Iterator iterator = comp.iterator();
 
 
@@ -212,6 +237,16 @@ public abstract class Reports {
         cell = row.createCell(8 + dash);
         cell.setCellValue("Штрихкод");
         cell.setCellStyle(style2);
+        cell = row.createCell(9 + dash);
+        cell.setCellValue("АЛ");
+        cell.setCellStyle(style2);
+        cell = row.createCell(10 + dash);
+        cell.setCellValue("ГОН");
+        cell.setCellStyle(style2);
+        cell = row.createCell(11 + dash);
+        cell.setCellValue("ЭЛ");
+        cell.setCellStyle(style2);
+
         while (iterator.hasNext()) {
             rownum++;
             Map.Entry<Double,Article> entry = (Map.Entry<Double, Article>) iterator.next();
@@ -250,6 +285,19 @@ public abstract class Reports {
                 cell.setCellValue("*"+search+"*");
             } else
                 cell.setCellValue("unknown");
+            Location location1 = JDBCLocation.checkifexists(article.getEan());
+            if (location1 == null || location1.getAlley().equals(0)){
+                location1 = JDBCLocation.checkForUnknown(article.getSegment(), article.getFamily(), article.getCategory());
+            }
+            cell = row.createCell(9 + dash);
+            cell.setCellStyle(style2);
+            cell.setCellValue(location1.getAlley());
+            cell = row.createCell(10 + dash);
+            cell.setCellStyle(style2);
+            cell.setCellValue(location1.getGondol());
+            cell = row.createCell(11 + dash);
+            cell.setCellStyle(style2);
+            cell.setCellValue(location1.getElement());
 
         }
         rownum++;
@@ -260,10 +308,10 @@ public abstract class Reports {
     }
 
 
-    public static void savePromoYersterday(File file, TreeMap<Double, Article> print) throws IOException {
+    public static void savePromoYersterday(File file, TreeMap<Integer, Article> print) throws IOException {
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet = workbook.createSheet("Вчерашнее промо");
-        List<Map.Entry<Double,Article>> comp = print.entrySet().stream().sorted(Map.Entry.comparingByValue()).collect(Collectors.toList());
+        List<Map.Entry<Integer,Article>> comp = print.entrySet().stream().sorted(Map.Entry.comparingByValue()).collect(Collectors.toList());
         Iterator iterator = comp.iterator();
 
 
@@ -330,6 +378,16 @@ public abstract class Reports {
         cell = row.createCell(7 + dash);
         cell.setCellValue("Штрихкод");
         cell.setCellStyle(style2);
+        cell = row.createCell(8 + dash);
+        cell.setCellValue("АЛ");
+        cell.setCellStyle(style2);
+        cell = row.createCell(9 + dash);
+        cell.setCellValue("ГОН");
+        cell.setCellStyle(style2);
+        cell = row.createCell(10 + dash);
+        cell.setCellValue("ЭЛ");
+        cell.setCellStyle(style2);
+
         while (iterator.hasNext()) {
             rownum++;
             Map.Entry<Double,Article> entry = (Map.Entry<Double, Article>) iterator.next();
@@ -365,7 +423,19 @@ public abstract class Reports {
                 cell.setCellValue("*"+search+"*");
             } else
                 cell.setCellValue("unknown");
-
+            Location location1 = JDBCLocation.checkifexists(article.getEan());
+            if (location1 == null || location1.getAlley().equals(0)){
+                location1 = JDBCLocation.checkForUnknown(article.getSegment(), article.getFamily(), article.getCategory());
+            }
+            cell = row.createCell(8 + dash);
+            cell.setCellStyle(style2);
+            cell.setCellValue(location1.getAlley());
+            cell = row.createCell(9 + dash);
+            cell.setCellStyle(style2);
+            cell.setCellValue(location1.getGondol());
+            cell = row.createCell(10 + dash);
+            cell.setCellStyle(style2);
+            cell.setCellValue(location1.getElement());
         }
         rownum++;
         sheet.autoSizeColumn(100000);
@@ -375,10 +445,10 @@ public abstract class Reports {
     }
 
 
-    public static void savePromoEndsToday(File file, TreeMap<Double, Article> print) throws IOException {
+    public static void savePromoEndsToday(File file, TreeMap<Integer, Article> print) throws IOException {
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet = workbook.createSheet("Закончится сегодня");
-        List<Map.Entry<Double,Article>> comp = print.entrySet().stream().sorted(Map.Entry.comparingByValue()).collect(Collectors.toList());
+        List<Map.Entry<Integer,Article>> comp = print.entrySet().stream().sorted(Map.Entry.comparingByValue()).collect(Collectors.toList());
         Iterator iterator = comp.iterator();
 
         int dash = 0;
@@ -444,6 +514,16 @@ public abstract class Reports {
         cell = row.createCell(7 + dash);
         cell.setCellValue("Штрихкод");
         cell.setCellStyle(style2);
+        cell = row.createCell(8 + dash);
+        cell.setCellValue("АЛ");
+        cell.setCellStyle(style2);
+        cell = row.createCell(9 + dash);
+        cell.setCellValue("ГОН");
+        cell.setCellStyle(style2);
+        cell = row.createCell(10 + dash);
+        cell.setCellValue("ЭЛ");
+        cell.setCellStyle(style2);
+
         while (iterator.hasNext()) {
             rownum++;
             Map.Entry<Double,Article> entry = (Map.Entry<Double, Article>) iterator.next();
@@ -479,6 +559,19 @@ public abstract class Reports {
                 cell.setCellValue("*"+search+"*");
             } else
                 cell.setCellValue("unknown");
+            Location location1 = JDBCLocation.checkifexists(article.getEan());
+            if (location1 == null || location1.getAlley().equals(0)){
+                location1 = JDBCLocation.checkForUnknown(article.getSegment(), article.getFamily(), article.getCategory());
+            }
+            cell = row.createCell(8 + dash);
+            cell.setCellStyle(style2);
+            cell.setCellValue(location1.getAlley());
+            cell = row.createCell(9 + dash);
+            cell.setCellStyle(style2);
+            cell.setCellValue(location1.getGondol());
+            cell = row.createCell(10 + dash);
+            cell.setCellStyle(style2);
+            cell.setCellValue(location1.getElement());
         }
         rownum++;
         sheet.autoSizeColumn(100000);

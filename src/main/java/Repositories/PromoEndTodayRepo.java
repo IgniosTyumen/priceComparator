@@ -5,7 +5,7 @@ import ObjectsProject.PromoTarif;
 import java.util.HashMap;
 
 public class PromoEndTodayRepo {
-    static HashMap<Double, PromoTarif> reposSet;
+    static HashMap<Integer, PromoTarif> reposSet;
     private static PromoEndTodayRepo ourInstance = new PromoEndTodayRepo();
 
     private PromoEndTodayRepo() {
@@ -20,12 +20,12 @@ public class PromoEndTodayRepo {
         reposSet.put(promo.getEan(), promo);
     }
 
-    public PromoTarif getPromoByEan(Double ean) {
+    public PromoTarif getPromoByEan(Integer ean) {
         return reposSet.get(ean);
     }
 
 
-    public HashMap<Double, PromoTarif> getAcessToRepository() {
+    public HashMap<Integer, PromoTarif> getAcessToRepository() {
         return reposSet;
     }
 }

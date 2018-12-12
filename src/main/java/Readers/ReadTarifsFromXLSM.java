@@ -17,7 +17,7 @@ import java.io.InputStream;
  */
 public class ReadTarifsFromXLSM {
 
-    static Double ean = 0.0;
+    static Integer ean = 0;
     static Double price = 0.0;
     static Double remaings = 0.0;
     static String manager = "";
@@ -30,6 +30,7 @@ public class ReadTarifsFromXLSM {
     static String filename = "";
     static String rowAdr = "";
 
+
     public static String getRowAdr() {
         return rowAdr;
     }
@@ -38,11 +39,11 @@ public class ReadTarifsFromXLSM {
         ReadOldArticles.rowAdr = rowAdr;
     }
 
-    public static Double getEan() {
+    public static Integer getEan() {
         return ean;
     }
 
-    public static void setEan(Double ean) {
+    public static void setEan(Integer ean) {
         ReadOldArticles.ean = ean;
     }
 
@@ -82,9 +83,6 @@ public class ReadTarifsFromXLSM {
         return segment;
     }
 
-    public static void setSegment(Double segment) {
-        ReadOldArticles.segment = segment;
-    }
 
     public static String getArticleName() {
         return articleName;
@@ -169,7 +167,7 @@ public class ReadTarifsFromXLSM {
         private static void uploadTarifParts(String adressColumn, String meaning) {
             switch (adressColumn) {
                 case ("B"): {
-                    ean = Double.parseDouble(meaning);
+                    ean = Integer.parseInt(meaning);
                     break;
                 }
                 case ("G"): {

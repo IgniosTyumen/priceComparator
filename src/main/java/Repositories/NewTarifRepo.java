@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class NewTarifRepo {
-    static Map<Double, NewTarif> reposSet;
+    static Map<Integer, NewTarif> reposSet;
     private static NewTarifRepo ourInstance = new NewTarifRepo();
 
     private NewTarifRepo() {
@@ -21,11 +21,11 @@ public class NewTarifRepo {
         reposSet.put(tarif.getEan(), tarif);
     }
 
-    public NewTarif getArticleByEan(Double ean) {
+    public NewTarif getArticleByEan(Integer ean) {
         return reposSet.get(ean);
     }
 
-    public Map<Double, NewTarif> getAcessToRepository() {
+    public Map<Integer, NewTarif> getAcessToRepository() {
         return reposSet;
     }
 }

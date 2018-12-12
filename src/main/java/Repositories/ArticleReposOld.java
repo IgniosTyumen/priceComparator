@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ArticleReposOld {
-    static Map<Double, Article> reposSet;
+    static Map<Integer, Article> reposSet;
     private static ArticleReposOld ourInstance = new ArticleReposOld();
 
     private ArticleReposOld() {
@@ -21,11 +21,11 @@ public class ArticleReposOld {
         reposSet.put(article.getEan(), article);
     }
 
-    public Article getArticleByEan(Double ean) {
+    public Article getArticleByEan(Integer ean) {
         return reposSet.get(ean);
     }
 
-    public Map<Double, Article> getRepoAcess() {
+    public Map<Integer, Article> getRepoAcess() {
         return reposSet;
     }
 }

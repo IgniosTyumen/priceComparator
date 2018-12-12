@@ -1,41 +1,36 @@
 package ObjectsProject;
 
+import lombok.Data;
+
 import java.util.Date;
 
+@Data
 public class PromoTarif {
 
-    private Double ean;
+    private Integer ean;
     private Double price;
     private Date startTarif;
     private Date endTarif;
     private String name;
-    private Double Segment;
 
-    public PromoTarif(Double ean, Double price, Date startTarif, Date endTarif) {
+    private Integer segment;
+    private Integer family;
+    private Integer category;
+
+    public PromoTarif(Integer ean, Double price, Date startTarif, Date endTarif) {
         this.ean = ean;
         this.price = price;
         this.startTarif = startTarif;
         this.endTarif = endTarif;
     }
 
-    public Double getEan() {
-        return ean;
-    }
-
-    public void setEan(Double ean) {
+    public PromoTarif(Integer ean, Double price, Date startTarif, Date endTarif, Integer segment, Integer family, Integer category) {
         this.ean = ean;
+        this.price = price;
+        this.startTarif = startTarif;
+        this.endTarif = endTarif;
+        this.segment = segment;
+        this.family = family;
+        this.category = category;
     }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public Date getStartTarif() {
-        return startTarif;
-    }
-
-    public Date getEndTarif() {
-        return endTarif;
-    }
-
 }

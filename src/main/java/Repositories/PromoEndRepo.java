@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PromoEndRepo {
-    static HashMap<Double, PromoTarif> reposSet;
+    static HashMap<Integer, PromoTarif> reposSet;
     private static PromoEndRepo ourInstance = new PromoEndRepo();
 
     private PromoEndRepo() {
@@ -21,12 +21,12 @@ public class PromoEndRepo {
         reposSet.put(promo.getEan(), promo);
     }
 
-    public PromoTarif getPromoByEan(Double ean) {
+    public PromoTarif getPromoByEan(Integer ean) {
         return reposSet.get(ean);
     }
 
 
-    public Map<Double, PromoTarif> getAcessToRepository() {
+    public Map<Integer, PromoTarif> getAcessToRepository() {
         return reposSet;
     }
 }

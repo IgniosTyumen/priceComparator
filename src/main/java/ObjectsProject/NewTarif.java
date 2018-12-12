@@ -1,14 +1,27 @@
 package ObjectsProject;
 
+import lombok.Data;
+
+@Data
 public class NewTarif {
-    private Double ean;
+    private Integer ean;
     private Double price;
     private String name;
-    private Double Segment;
+    private Integer segment;
+    private Integer family;
+    private Integer category;
 
-    public NewTarif(Double ean, Double price) {
+    public NewTarif(Integer ean, Double price) {
         this.ean = ean;
         this.price = price;
+    }
+
+    public NewTarif(Integer ean, Double price, Integer segment, Integer family, Integer category) {
+        this.ean = ean;
+        this.price = price;
+        this.segment = segment;
+        this.family = family;
+        this.category = category;
     }
 
     @Override
@@ -17,18 +30,6 @@ public class NewTarif {
                 "ean=" + ean +
                 ", price=" + price +
                 '}';
-    }
-
-    public Double getEan() {
-        return ean;
-    }
-
-    public void setEan(Double ean) {
-        this.ean = ean;
-    }
-
-    public Double getPrice() {
-        return price;
     }
 
 }

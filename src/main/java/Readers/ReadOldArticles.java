@@ -18,24 +18,29 @@ import java.io.InputStream;
  */
 public class ReadOldArticles {
 
-    static Double ean = 0.0;
+    static Integer ean = 0;
     static Double price = 0.0;
     static Double remaings = 0.0;
     static String manager = "";
     static String chief = "";
-    static Double segment = 0.0;
+    static Integer segment = 0;
     static String articleName = "";
     static String status = "";
     static boolean ready = false;
     static String cellAdr = "";
     static String filename = "";
     static String rowAdr = "";
+    private static Integer category=0;
+    private static Integer family=0;
+    private static Integer alley=0;
+    private static Integer gondol=0;
+    private static Integer element=0;
 
-    public static Double getEan() {
+    public static Integer getEan() {
         return ean;
     }
 
-    public static void setEan(Double ean) {
+    public static void setEan(Integer ean) {
         ReadOldArticles.ean = ean;
     }
 
@@ -92,11 +97,17 @@ public class ReadOldArticles {
         private static void uploadArticleParts(String adressColumn, String meaning) {
             switch (adressColumn) {
                 case ("A"): {
-                    segment = Double.parseDouble(meaning);
+                    segment = Integer.parseInt(meaning);
                     break;
                 }
+                case ("B"): {
+                    category = Integer.parseInt(meaning);
+                }
+                case ("C"): {
+                    family = Integer.parseInt(meaning);
+                }
                 case ("D"): {
-                    ean = Double.parseDouble(meaning);
+                    ean = Integer.parseInt(meaning);
                     break;
                 }
                 case ("E"): {
@@ -121,7 +132,9 @@ public class ReadOldArticles {
                 }
                 case ("AI"): {
                     manager = (meaning);
-                    Article article = new Article(ean, price, remaings, meaning, chief, segment, articleName, status);
+
+                    Article article = Article.builder().segment(segment).category(category).family(family).ean(ean).articleName(articleName).status(status)
+                            .price(price).remaings(remaings).chief(chief).manager(manager).build();
                     if (filename.equals("LPDPold")) {
                         ArticleReposOld.getInstance().putArticle(article);
                     } else {
