@@ -33,11 +33,25 @@ public class JDBCInitializer {
             result =  rs.getString(1);
             rs.close();
             } catch (SQLException e) {
-            e.printStackTrace();
-            
+
         }
         return result;
     }
+
+    public static Integer findArticleByEan(String ean){
+        String sqluni = "SELECT article FROM good WHERE  ean="+ean;
+        Integer result = null;
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(sqluni);
+            result =  rs.getInt(1);
+            rs.close();
+        } catch (SQLException e) {
+
+        }
+        return result;
+    }
+
 
     public static void close(){
         try {

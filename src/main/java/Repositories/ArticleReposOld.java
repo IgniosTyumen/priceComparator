@@ -1,6 +1,7 @@
 package Repositories;
 
 import ObjectsProject.Article;
+import ObjectsProject.Location;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,5 +28,15 @@ public class ArticleReposOld {
 
     public Map<Integer, Article> getRepoAcess() {
         return reposSet;
+    }
+
+    public Location recallSFC(Integer ean){
+        Location result = new Location();
+        if (reposSet.containsKey(ean)){
+            result.setSegment(reposSet.get(ean).getSegment());
+            result.setFamily(reposSet.get(ean).getFamily());
+            result.setCategory(reposSet.get(ean).getCategory());
+        }
+        return result;
     }
 }

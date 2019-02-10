@@ -170,7 +170,7 @@ public class ReadTarifsFromXLSM {
                     ean = Integer.parseInt(meaning);
                     break;
                 }
-                case ("G"): {
+                case ("E"): {
                     price = Double.parseDouble(meaning);
                     NewTarif tarif = new NewTarif(ean, price);
                     NewTarifRepo.getInstance().putTarif(tarif);

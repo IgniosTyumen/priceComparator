@@ -285,7 +285,10 @@ public abstract class Reports {
                 cell.setCellValue("*"+search+"*");
             } else
                 cell.setCellValue("unknown");
-            Location location1 = JDBCLocation.checkifexists(article.getEan());
+            Location location1 = null;
+            if (article!=null) {
+                location1 = JDBCLocation.checkifexists(article.getEan());
+            }
             if (location1 == null || location1.getAlley().equals(0)){
                 location1 = JDBCLocation.checkForUnknown(article.getSegment(), article.getFamily(), article.getCategory());
             }
@@ -423,7 +426,10 @@ public abstract class Reports {
                 cell.setCellValue("*"+search+"*");
             } else
                 cell.setCellValue("unknown");
-            Location location1 = JDBCLocation.checkifexists(article.getEan());
+            Location location1 = null;
+            if (article!=null) {
+                location1 = JDBCLocation.checkifexists(article.getEan());
+            }
             if (location1 == null || location1.getAlley().equals(0)){
                 location1 = JDBCLocation.checkForUnknown(article.getSegment(), article.getFamily(), article.getCategory());
             }
@@ -559,7 +565,10 @@ public abstract class Reports {
                 cell.setCellValue("*"+search+"*");
             } else
                 cell.setCellValue("unknown");
-            Location location1 = JDBCLocation.checkifexists(article.getEan());
+            Location location1 = null;
+            if (article!=null) {
+                location1 = JDBCLocation.checkifexists(article.getEan());
+            }
             if (location1 == null || location1.getAlley().equals(0)){
                 location1 = JDBCLocation.checkForUnknown(article.getSegment(), article.getFamily(), article.getCategory());
             }

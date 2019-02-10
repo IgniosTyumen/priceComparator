@@ -28,26 +28,30 @@ public class JDBCLocation {
         }
     }
     public static Location checkifexists(Integer article) {
-        String sqluni = "SELECT alley, gondol, element FROM location WHERE  article=" + article;
-        Location result = new Location();
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(sqluni);
-            if (rs != null) {
-                result.setAlley(rs.getInt("alley"));
-                result.setGondol(rs.getInt("gondol"));
-                result.setElement(rs.getInt("element"));
+        if (article != null) {
+            String sqluni = "SELECT alley, gondol, element FROM location WHERE  article=" + article;
+            Location result = new Location();
+            try {
+                Statement statement = connection.createStatement();
+                ResultSet rs = statement.executeQuery(sqluni);
+                if (rs!=null) {
+                    result.setAlley(rs.getInt("alley"));
+                    result.setGondol(rs.getInt("gondol"));
+                    result.setElement(rs.getInt("element"));
+                }
+                rs.close();
+                return result;
+
+            } catch (SQLException e) {
+
+                return null;
             }
-            rs.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-
         }
-        return result;
+        else return null;
     }
 
     public static Location checkForUnknown(Integer segment, Integer family, Integer category){
+
             String sqluni2 = "SELECT alley, gondol, element FROM location WHERE  segment="+segment+" AND category="+category+" AND family="+family;
             List<Location>  locations = new ArrayList<>();
 
@@ -70,6 +74,11 @@ public class JDBCLocation {
 
             }
         Location result = findLocationForEmpty(locations);
+            if (result == null) {
+                result.setAlley(0);
+                result.setGondol(0);
+                result.setElement(0);
+            }
         return result;
     }
 
@@ -162,12 +171,12 @@ public class JDBCLocation {
         while (it.hasNext()) {
             Location next = (Location) it.next();
             if (next.getAlley().equals(alleyy) && next.getGondol().equals(gondol)) {
-                Integer element = next.getGondol();
-                if (search.containsKey(gondol)) {
-                    Integer value = search.get(gondol);
+                Integer element = next.getElement();
+                if (search.containsKey(element)) {
+                    Integer value = search.get(element);
                     search.replace(gondol, value, ++value);
                 } else {
-                    search.put(gondol, 0);
+                    search.put(element, 0);
                 }
             }
         }
