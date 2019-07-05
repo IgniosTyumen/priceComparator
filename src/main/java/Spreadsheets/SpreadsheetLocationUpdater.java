@@ -73,7 +73,7 @@ public class SpreadsheetLocationUpdater {
         System.out.println("Открытие гугл листа");
         // Build a new authorized API client service.
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-        final String spreadsheetId = "1WOSKPodNj4Hq-mCyLtOwz25lIUUgFpzLqHkg0YbCIs4";
+        final String spreadsheetId = "spreadsheet id";
         final String range = "Reimplantation!A2:D";
         Sheets service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
                 .setApplicationName(APPLICATION_NAME)
